@@ -1,0 +1,24 @@
+[package]
+name = "geopoint"
+version = "0.1.0"
+edition = "2021"
+authors = ["mxfactorial"]
+description = "conformal geometric algebra on the O(1) geonum crate"
+license = "BSD-3-Clause"
+repository = "https://github.com/mxfactorial/geopoint"
+readme = "README.md"
+keywords = ["geometric-algebra", "conformal", "math", "geometry"]
+categories = ["mathematics", "science", "simulation",]
+
+[dependencies]
+geonum = "0.3.1"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "geopoint_benchmarks"
+harness = false
+
+[features]
+default = []
