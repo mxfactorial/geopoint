@@ -9,15 +9,7 @@
 
 conformal geometric algebra built on top of the O(1) [geonum](https://crates.io/crates/geonum) crate
 
-conformal geometric algebra extends euclidean geometric algebra by adding two basis vectors: e₀ (origin) and e∞ (infinity). this allows elegant representation of primitives like:
-
-- points: p = e₀ + x + ½x²e∞ (where x is euclidean position)
-- spheres: s = p - ½r²e∞ (where p is center point, r is radius)
-- planes: π = n + de∞ (where n is normal vector, d is distance from origin)
-
-all transformations can be expressed through versors (geometric algebra operators) applied via sandwich products
-
-### features
+## features
 
 - conformal point representation for euclidean geometry
 - geometric primitives: points, lines, planes, spheres, circles
@@ -25,11 +17,13 @@ all transformations can be expressed through versors (geometric algebra operator
 - conformal transformations: translation, rotation, dilation, inversion
 - versor implementation for efficient transformations
 
-### use
+## use
 
 ```
 cargo add geopoint
 ```
+
+### basic
 
 ```rust
 use geopoint::*;
@@ -62,7 +56,29 @@ let translated_point = point.translate(&translation);
 let scaled_point = point.dilate(2.0);
 ```
 
-see `tests/lib_test.rs` for more examples of conformal geometric algebra operations
+### custom standard angle
+
+```rust
+use geopoint::ZeroVector;
+use std::f64::consts::PI as pi;
+
+// create a zero vector with a custom standard angle (pi/4 angle)
+let custom_metric = ZeroVector::new(3, pi/4.0);
+
+// work with this custom standard angle
+let point = custom_metric.point(&[1.0, 2.0, 3.0]);
+
+// standard angle (pi/2) matches euclidean geometry
+let standard = ZeroVector::standard(3);
+
+// conformal angle (0.0) for conformal transformations
+let conformal = ZeroVector::conformal(3);
+```
+
+see:
+- `tests/lib_test.rs` for examples of basic usage
+- `tests/zero_vector_test.rs` for examples with custom metrics
+- `tests/conformal_test.rs` for a complete demonstration
 
 ### benches
 
@@ -92,17 +108,13 @@ geopoint maintains geonums O(1) computational advantage in high dimensional spac
 
 geopoint demonstrates excellent performance with operations completing in hundreds of nanoseconds. high-dimensional operations scale efficiently, showing only a small increase in execution time as dimensions grow - a key advantage of the underlying O(1) representation from geonum
 
-```
-cargo bench
-```
-
 ### test
 
 ```
 cargo fmt --check # format
 cargo clippy # lint
 cargo test --lib # unit
-cargo test --test lib_test # feature
+cargo test --test "*" # feature
 cargo bench # bench
 cargo llvm-cov # coverage
 ```
@@ -115,45 +127,8 @@ cargo doc --open
 
 ### todo
 
-- **null basis handling**
-  - implement null basis elements e+ and e- (e+ = (e₀ + e∞)/2, e- = (e₀ - e∞)/2)
-  - create null basis representation satisfying e+² = 0, e-² = 0, e+·e- = -0.5
-  - optimize operations using the null basis representation
-
-- **blade identification and extraction**
-  - implement `detect_primitive_type()` to identify geometric entity type
-  - add detection for spheres, planes, lines, circles, and point pairs
-  - extract grade components from multivectors based on angle patterns
-  - add `PrimitiveType` enum for classifying geometric objects
-
-- **meet and join operations**
-  - implement meet (intersection) operation using the dual approach: X ∧ Y = (X* ∨ Y*)*
-  - implement join (union) operation using the wedge product
-  - add grade handling and decomposition for outer products
-  - implement helpers `highest_grade()` and `decompose_by_grade()`
-
-- **versor operations for transformations**
-  - implement sandwich product for versor-based transformations
-  - add conjugate method for versors (R⁻¹ = R̃)
-  - create geometric product with [length, angle] handling
-  - implement optimizations for common transformations
-
-- **optimizations**
-  - component compression - merge similar angle components
-  - lazy evaluation - delay computations until needed
-  - angle pattern caching - build lookup tables for common patterns
-  - specialized storage for high-dimensional spaces
-  - parallel computation for large multivectors
-
-- **benchmarks and metrics**
-  - implement sphere intersection benchmarks
-  - add conformal translation performance tests
-  - create high-dimensional sphere benchmarks (1000+ dimensions)
-  - compare against traditional implementations to show O(1) advantage
-
-- **grade projection and selection** - extract specific grades from multivectors
-- **conformal conversions** - optimize conversion between euclidean and conformal
-- **motor operations** - unified system for rotation and translation
-- **distance and angle calculations** - compute geometric measurements
-- **dualization and projection** - implement dual operations and projection operators
-- **conformal integration with geonum** - integrate with geonum's O(1) representation
+- complete coordinate extraction for all dimensions 
+- fix rotation with custom angle
+- implement meet and join operations
+- add blade identification
+- optimize high-dimensional operations

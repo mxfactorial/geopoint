@@ -1,6 +1,6 @@
 [package]
 name = "geopoint"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["mxfactorial"]
 description = "conformal geometric algebra on the O(1) geonum crate"
