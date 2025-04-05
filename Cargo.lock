@@ -180,7 +180,7 @@ checksum = "90fb0f91d0901aad3094e02d277fea839d32522cc761c958c26e1df233dd8aa5"
 
 [[package]]
 name = "geopoint"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "criterion",
  "geonum",

@@ -6,6 +6,10 @@ skip apostrophes in words as in "dont" unless it conflicts with another word, "w
 
 express π as pi in comments and docs
 
-avoid words like "properly", "correctly" and "appropriately"
+avoid words like "properly", "correctly", "appropriately" and "valid"
 
 say "compute" instead of "calculate"
+
+say "design" instead of "approach"
+
+avoid saying "good" in docs and comments
